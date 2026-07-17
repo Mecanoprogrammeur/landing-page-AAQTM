@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rêvothèque - Attirer l'Amour que Tu Mérites</title>
-  <meta name="description" content="Découvrez le guide premium de Rêvothèque pour guérir vos blessures émotionnelles, briser les schémas douloureux et attirer une relation saine et durable.">
+  <title>Attirer l'Amour que Tu Mérites | Brise tes schémas amoureux</title>
+  <meta name="description" content="Découvrez le guide pour guérir vos blessures émotionnelles, briser les schémas douloureux et attirer une relation saine.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -69,10 +69,20 @@
       0%    {opacity: 0; transform: translateY(-10px)}
       100%  {opacity: 1; transform: translateY(0)}
     }
+
+    /* CSS Native Animations for Hero to prevent LCP delay */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
   </style>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <!-- Load GSAP below the fold -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 </head>
 <body class="bg-obsidienne text-ivoire min-h-screen selection:bg-or selection:text-obsidienne overflow-x-hidden font-sans relative">
 
@@ -86,231 +96,214 @@
   <svg class="absolute top-0 left-0 w-full h-[3000px] pointer-events-none z-0 opacity-40 md:opacity-70" preserveAspectRatio="none" viewBox="0 0 100 3000" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path id="kintsugi-path" class="kintsugi-line" d="M 50 0 Q 60 300 40 600 T 70 1200 T 30 1800 T 60 2400 T 50 3000" stroke="#D4AF37" stroke-width="0.3" stroke-linecap="round"/>
     <path id="kintsugi-branch-1" class="kintsugi-line" d="M 40 600 Q 20 650 10 700" stroke="#D4AF37" stroke-width="0.15" stroke-linecap="round"/>
-    <path id="kintsugi-branch-2" class="kintsugi-line" d="M 70 1200 Q 85 1250 95 1280" stroke="#D4AF37" stroke-width="0.15" stroke-linecap="round"/>
   </svg>
 
   <!-- Navbar -->
-  <nav id="navbar" class="fixed top-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-5xl rounded-full border border-transparent transition-all duration-500 flex items-center justify-between px-6 py-4">
+  <nav id="navbar" class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-5xl rounded-full border border-transparent transition-all duration-500 flex items-center justify-between px-4 md:px-6 py-3 md:py-4">
     <div class="flex items-center gap-2">
       <svg class="w-5 h-5 text-or" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-      <span class="font-serif italic font-bold tracking-widest text-or text-xl">Rêvothèque</span>
+      <span class="font-serif italic font-bold tracking-widest text-or text-lg md:text-xl">Rêvothèque</span>
     </div>
-    <div class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wide text-ivoire/80">
-      <a href="#hero" class="hover:text-or transition-colors">Le Guide</a>
-      <a href="#temoignages" class="hover:text-or transition-colors">Avis</a>
-      <a href="#features" class="hover:text-or transition-colors">Programme</a>
-      <a href="#pricing" class="hover:text-or transition-colors">Offre</a>
-    </div>
-    <a href="https://wbamapto.mychariow.online/prd_bfz1xz9g" class="bg-or hover:bg-orDoux text-obsidienne font-bold px-6 py-2.5 rounded-full text-xs uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:-translate-y-0.5">
+    <a href="#pricing" class="bg-or hover:bg-orDoux text-obsidienne font-bold px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(212,175,55,0.2)] hover:shadow-[0_0_30px_rgba(212,175,55,0.4)]">
       Obtenir le livre
     </a>
   </nav>
 
-  <!-- Hero Section -->
-  <header id="hero" class="relative min-h-[95vh] w-full flex items-center pt-32 pb-16 px-6 md:px-12 z-10">
+  <!-- Mobile Sticky CTA (Bottom) -->
+  <div class="fixed bottom-0 left-0 w-full p-4 z-50 md:hidden bg-gradient-to-t from-obsidienne via-obsidienne/90 to-transparent">
+    <a href="#pricing" class="block w-full bg-or text-obsidienne font-bold py-4 rounded-xl text-center text-sm uppercase tracking-widest shadow-[0_0_30px_rgba(212,175,55,0.3)] animate-pulse">
+      Je commence ma transformation
+    </a>
+  </div>
+
+  <!-- 1. Hero Section -->
+  <header id="hero" class="relative min-h-[90vh] w-full flex items-center pt-28 pb-16 px-6 md:px-12 z-10">
     <div class="max-w-6xl mx-auto w-full grid lg:grid-cols-12 gap-12 items-center">
       
       <!-- Text -->
-      <div class="lg:col-span-7 text-left space-y-8 gs-reveal">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-or/10 border border-or/20 text-or text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
+      <div class="lg:col-span-7 text-left space-y-6 animate-fade-in opacity-0">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-burgundy/40 border border-burgundy/80 text-or text-xs font-bold uppercase tracking-widest backdrop-blur-sm">
           <span class="w-1.5 h-1.5 rounded-full bg-or animate-pulse"></span>
-          Ebook Premium & 2 Bonus Inclus
+          Pour les femmes prêtes à briser le cycle
         </div>
         
-        <h1 class="leading-[1.05]">
-          <span class="block text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-ivoire mb-2 text-balance">
-            Guérissez vos blessures invisibles,
+        <h1 class="leading-[1.1]">
+          <span class="block text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight text-ivoire mb-2 text-balance">
+            Pourquoi tu attires toujours le <span class="text-or">même type d'hommes</span>
           </span>
-          <span class="block text-5xl md:text-7xl lg:text-7xl font-serif italic text-or">
-            attirez l'amour que vous méritez.
+          <span class="block text-2xl md:text-4xl lg:text-5xl font-serif italic text-ivoire/80 mt-3 text-balance">
+            (et comment enfin inverser la tendance en 30 jours).
           </span>
         </h1>
         
-        <p class="text-lg md:text-xl max-w-xl leading-relaxed text-ivoire/75 font-light text-balance">
-          Le guide pas à pas pour briser les schémas répétitifs douloureux, restaurer votre estime de soi et construire enfin une relation saine et équilibrée.
+        <p class="text-base md:text-lg max-w-xl leading-relaxed text-ivoire/80 font-light text-balance">
+          Le guide complet pour guérir tes blessures invisibles, retrouver une confiance inébranlable et attirer une relation saine et sécurisante, <strong class="text-ivoire font-semibold">sans jamais avoir à te renier.</strong>
         </p>
 
-        <ul class="space-y-4 text-ivoire/90 font-medium">
-          <li class="flex items-center gap-3">
-            <svg class="w-5 h-5 text-or flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Comprendre pourquoi vous attirez les mêmes partenaires
-          </li>
-          <li class="flex items-center gap-3">
-            <svg class="w-5 h-5 text-or flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-            Identifier les red flags dès la première rencontre
-          </li>
-        </ul>
-        
-        <div class="pt-4 flex flex-col sm:flex-row gap-5">
-          <a href="#pricing" class="group bg-or hover:bg-orDoux text-obsidienne font-bold px-8 py-4 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.15)] hover:shadow-[0_0_40px_rgba(212,175,55,0.3)] hover:-translate-y-1">
-            <span class="text-base uppercase tracking-wider">Voir les offres</span>
-            <svg class="w-5 h-5 ml-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+        <div class="pt-6 flex flex-col sm:flex-row gap-4">
+          <a href="#pricing" class="group bg-or hover:bg-orDoux text-obsidienne font-bold px-8 py-5 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.2)] hover:shadow-[0_0_40px_rgba(212,175,55,0.4)] hover:-translate-y-1">
+            <span class="text-base uppercase tracking-wider">Je commence ma transformation</span>
           </a>
         </div>
+        <p class="text-xs text-ivoire/40 italic">Lecture immédiate sur téléphone, tablette ou PC.</p>
       </div>
 
       <!-- Image 3D Book -->
-      <div class="lg:col-span-5 flex justify-center items-center mt-12 lg:mt-0 relative gs-reveal">
+      <div class="lg:col-span-5 flex justify-center items-center mt-8 lg:mt-0 relative animate-fade-in opacity-0" style="animation-delay: 0.2s;">
         <div class="absolute w-64 h-64 rounded-full bg-or/15 blur-[100px] -z-10"></div>
-        <div class="w-full max-w-[320px] rounded-[1rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] border border-or/20 transform hover:-translate-y-2 transition-transform duration-700">
-          <img src="./assets/cover.jpg" alt="Couverture du livre" class="w-full h-auto object-cover" onerror="this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800'; this.classList.add('opacity-50')">
+        <div class="w-full max-w-[280px] md:max-w-[320px] rounded-[1rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(0,0,0,0.8)] border border-or/20">
+          <img src="./assets/cover.jpg" alt="Couverture du livre" fetchpriority="high" class="w-full h-auto object-cover" onerror="this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800'; this.classList.add('opacity-50')">
         </div>
       </div>
 
     </div>
   </header>
 
-  <!-- Problem / Intro -->
-  <section class="py-24 px-6 relative z-10 bg-ombre/50 border-y border-ivoire/5">
-    <div class="max-w-3xl mx-auto text-center gs-reveal-up">
-      <svg class="w-8 h-8 text-or mx-auto mb-6 opacity-80" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-8">
-        Tu mérites un amour qui te <span class="font-serif italic text-or">choisit vraiment</span>.
+  <!-- 2. Identification (Le Problème) -->
+  <section class="py-24 md:py-32 px-6 relative z-10 bg-ombre/80 border-y border-ivoire/5">
+    <div class="max-w-3xl mx-auto gs-reveal-up">
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight mb-12 text-center text-balance">
+        Tu te reconnaîtras <span class="font-serif italic text-or">probablement</span> si...
       </h2>
-      <p class="text-lg text-ivoire/70 leading-relaxed mb-6">
-        Tu en as assez de retomber constamment sur les mêmes profils ? De tout donner sans jamais recevoir l'attention et le respect en retour ? Tu vois tes relations démarrer avec espoir pour s'éteindre dans la douleur.
-      </p>
-      <p class="text-lg text-ivoire/90 font-medium leading-relaxed">
-        Et si le problème n'était pas toi, mais de <span class="text-or">fines blessures invisibles</span> qui influencent tes choix ?
-      </p>
-    </div>
-  </section>
-
-  <!-- Social Proof (Fictive) -->
-  <section id="temoignages" class="py-24 px-6 relative z-10">
-    <div class="max-w-5xl mx-auto">
-      <h2 class="text-center text-xs uppercase tracking-widest text-or font-bold mb-16">Elles ont brisé le cycle</h2>
       
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Testimonial 1 -->
-        <div class="bg-ombre border border-ivoire/5 rounded-3xl p-8 relative hover:border-or/20 transition-colors gs-reveal-up">
-          <div class="text-or text-4xl font-serif absolute top-6 right-8 opacity-20">"</div>
-          <div class="flex items-center gap-1 mb-6">
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          </div>
-          <p class="text-ivoire/80 italic mb-6 leading-relaxed">
-            "J'ai enfin compris pourquoi j'attirais toujours des hommes émotionnellement indisponibles. Ce livre n'est pas un recueil de 'techniques de drague', c'est un miroir bienveillant. La checklist m'a empêchée de refaire la même erreur le mois dernier."
+      <div class="space-y-6">
+        <div class="flex items-start gap-4 bg-obsidienne/50 p-6 rounded-2xl border border-ivoire/5 hover:border-or/20 transition-colors">
+          <div class="w-8 h-8 rounded-full bg-burgundy/50 text-or flex items-center justify-center shrink-0 mt-1">✗</div>
+          <p class="text-lg text-ivoire/90 leading-relaxed">
+            Tu donnes tout dans une relation, mais tu finis toujours par te sentir délaissée, acquise ou incomprise.
           </p>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-or/10 flex items-center justify-center text-or font-bold font-serif">S</div>
-            <div>
-              <p class="font-bold text-sm">Sarah L.</p>
-              <p class="text-xs text-ivoire/50">Lectrice vérifiée</p>
-            </div>
-          </div>
         </div>
-
-        <!-- Testimonial 2 -->
-        <div class="bg-ombre border border-ivoire/5 rounded-3xl p-8 relative hover:border-or/20 transition-colors gs-reveal-up" style="transition-delay: 100ms;">
-          <div class="text-or text-4xl font-serif absolute top-6 right-8 opacity-20">"</div>
-          <div class="flex items-center gap-1 mb-6">
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg class="w-4 h-4 text-or" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-          </div>
-          <p class="text-ivoire/80 italic mb-6 leading-relaxed">
-            "Le carnet de 30 jours est incroyable. Il m'a aidée à poser mes limites sans me sentir coupable. Ce n'est pas juste de la lecture, c'est une vraie thérapie guidée pour reprendre le contrôle de sa vie amoureuse."
+        <div class="flex items-start gap-4 bg-obsidienne/50 p-6 rounded-2xl border border-ivoire/5 hover:border-or/20 transition-colors">
+          <div class="w-8 h-8 rounded-full bg-burgundy/50 text-or flex items-center justify-center shrink-0 mt-1">✗</div>
+          <p class="text-lg text-ivoire/90 leading-relaxed">
+            Tu tombes sur des hommes <strong class="text-ivoire">"émotionnellement indisponibles"</strong> qui te font espérer avant de prendre leurs distances.
           </p>
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-full bg-or/10 flex items-center justify-center text-or font-bold font-serif">M</div>
-            <div>
-              <p class="font-bold text-sm">Marie D.</p>
-              <p class="text-xs text-ivoire/50">Lectrice vérifiée</p>
-            </div>
-          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-obsidienne/50 p-6 rounded-2xl border border-ivoire/5 hover:border-or/20 transition-colors">
+          <div class="w-8 h-8 rounded-full bg-burgundy/50 text-or flex items-center justify-center shrink-0 mt-1">✗</div>
+          <p class="text-lg text-ivoire/90 leading-relaxed">
+            Tu as l'impression de revivre le même schéma toxique, encore et encore, simplement avec des visages différents.
+          </p>
+        </div>
+        <div class="flex items-start gap-4 bg-obsidienne/50 p-6 rounded-2xl border border-ivoire/5 hover:border-or/20 transition-colors">
+          <div class="w-8 h-8 rounded-full bg-burgundy/50 text-or flex items-center justify-center shrink-0 mt-1">✗</div>
+          <p class="text-lg text-ivoire/90 leading-relaxed">
+            Tu as une peur secrète d'être abandonnée, ce qui te pousse parfois à accepter l'inacceptable par peur du vide.
+          </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Features & Program -->
-  <section id="features" class="py-24 px-6 relative z-10 bg-ombre/30 border-y border-ivoire/5">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-20">
-        <h2 class="text-xs uppercase tracking-widest text-or font-bold mb-4">Programme de Guérison</h2>
-        <p class="text-3xl md:text-5xl font-bold tracking-tight">
-          Ce que vous allez <span class="font-serif italic text-or">transformer</span>
+  <!-- 3. Agitation & 4. Révélation -->
+  <section class="py-24 md:py-32 px-6 relative z-10">
+    <div class="max-w-4xl mx-auto text-center gs-reveal-up space-y-12">
+      <div class="space-y-6">
+        <h3 class="text-2xl md:text-3xl font-serif italic text-or">Le pire dans tout ça ?</h3>
+        <p class="text-lg md:text-xl text-ivoire/80 leading-relaxed max-w-2xl mx-auto">
+          Ce n'est pas la rupture. C'est le doute venimeux qui s'installe en toi. Tu commences à croire que <strong class="text-ivoire">le problème vient de toi</strong>. Que tu es "trop exigeante", "trop sensible" ou "pas assez bien". 
+        </p>
+        <p class="text-lg md:text-xl text-ivoire/80 leading-relaxed max-w-2xl mx-auto">
+          Chaque mois passé dans ce schéma détruit un peu plus ton estime. Le coût émotionnel devient insupportable.
         </p>
       </div>
 
-      <div class="grid lg:grid-cols-3 gap-8">
-        <!-- Pillar 1 -->
+      <div class="h-px w-32 bg-gradient-to-r from-transparent via-or/50 to-transparent mx-auto"></div>
+
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight">
+          Mais et si le problème n'était <span class="text-or uppercase">pas</span> toi ?
+        </h2>
+        <p class="text-lg md:text-xl text-ivoire/90 leading-relaxed max-w-2xl mx-auto font-medium">
+          Tes choix amoureux sont actuellement dictés par des blessures invisibles de ton passé. Ton cerveau est programmé pour être attiré par ce qui lui est familier, même si c'est douloureux.
+        </p>
+        <p class="text-xl md:text-2xl font-serif italic text-or pt-4">
+          La bonne nouvelle ? Un schéma, ça se déprogramme.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Les Bénéfices -->
+  <section class="py-24 md:py-32 px-6 relative z-10 bg-ombre/50 border-y border-ivoire/5">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-16 gs-reveal-up">
+        <h2 class="text-xs uppercase tracking-widest text-or font-bold mb-4">La Transformation</h2>
+        <p class="text-3xl md:text-5xl font-bold tracking-tight">
+          Ce qui va <span class="font-serif italic text-or">changer pour toi</span>
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
         <div class="bg-obsidienne border border-ivoire/5 rounded-[2rem] p-10 hover:border-or/30 transition-all duration-500 gs-reveal-up group">
-          <div class="w-14 h-14 rounded-2xl bg-or/10 flex items-center justify-center text-or mb-8 group-hover:scale-110 transition-transform duration-500">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          <div class="w-14 h-14 rounded-2xl bg-or/10 flex items-center justify-center text-or mb-8">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
           </div>
-          <h3 class="text-2xl font-serif font-bold mb-4 text-ivoire">Briser les Schémas</h3>
-          <p class="text-ivoire/70 leading-relaxed">
-            Identifiez le profil d'attachement qui dicte vos choix amoureux (Anxieux, Évitant, Sauveur) et découvrez comment le reprogrammer pour cesser de souffrir.
+          <h3 class="text-2xl font-serif font-bold mb-4 text-ivoire">Une paix intérieure absolue</h3>
+          <p class="text-ivoire/80 leading-relaxed text-lg">
+            Fini l'anxiété quand il met du temps à répondre. Ta valeur ne dépendra plus jamais de son attention. Tu retrouveras un calme mental inébranlable.
           </p>
         </div>
         
-        <!-- Pillar 2 -->
         <div class="bg-obsidienne border border-ivoire/5 rounded-[2rem] p-10 hover:border-or/30 transition-all duration-500 gs-reveal-up group" style="transition-delay: 100ms;">
-          <div class="w-14 h-14 rounded-2xl bg-or/10 flex items-center justify-center text-or mb-8 group-hover:scale-110 transition-transform duration-500">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /><path stroke-linecap="round" stroke-linejoin="round" d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z" /></svg>
-          </div>
-          <h3 class="text-2xl font-serif font-bold mb-4 text-ivoire">Guérir l'Estime</h3>
-          <p class="text-ivoire/70 leading-relaxed">
-            Restaurez votre confiance avec des exercices d'introspection profonds. Votre valeur ne dépend plus du regard de l'autre, elle devient inébranlable.
-          </p>
-        </div>
-
-        <!-- Pillar 3 -->
-        <div class="bg-obsidienne border border-ivoire/5 rounded-[2rem] p-10 hover:border-or/30 transition-all duration-500 gs-reveal-up group" style="transition-delay: 200ms;">
-          <div class="w-14 h-14 rounded-2xl bg-or/10 flex items-center justify-center text-or mb-8 group-hover:scale-110 transition-transform duration-500">
+          <div class="w-14 h-14 rounded-2xl bg-or/10 flex items-center justify-center text-or mb-8">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
           </div>
-          <h3 class="text-2xl font-serif font-bold mb-4 text-ivoire">Fixer ses Limites</h3>
-          <p class="text-ivoire/70 leading-relaxed">
-            Détectez instantanément les Red Flags (signaux d'alerte) et les Green Flags (signes de sécurité). Ne laissez plus personne franchir vos limites.
+          <h3 class="text-2xl font-serif font-bold mb-4 text-ivoire">Un radar à "Red Flags"</h3>
+          <p class="text-ivoire/80 leading-relaxed text-lg">
+            Tu identifieras les manipulateurs et les hommes indisponibles dès les 5 premières minutes d'un rendez-vous. Tu ne perdras plus jamais des mois avec le mauvais.
+          </p>
+        </div>
+
+        <div class="bg-obsidienne border border-ivoire/5 rounded-[2rem] p-10 hover:border-or/30 transition-all duration-500 gs-reveal-up group" style="transition-delay: 200ms;">
+          <div class="w-14 h-14 rounded-2xl bg-or/10 flex items-center justify-center text-or mb-8">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          </div>
+          <h3 class="text-2xl font-serif font-bold mb-4 text-ivoire">Des standards respectés</h3>
+          <p class="text-ivoire/80 leading-relaxed text-lg">
+            Tu sauras poser tes limites avec douceur mais fermeté. C'est cette confiance tranquille qui attire naturellement le respect et l'engagement d'un partenaire sain.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Pack & Bonuses -->
-  <section class="py-24 px-6 relative z-10">
+  <!-- 7. Preuve Sociale (Humanisée) -->
+  <section class="py-24 md:py-32 px-6 relative z-10">
     <div class="max-w-5xl mx-auto">
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <!-- Visual -->
-        <div class="relative gs-reveal">
-          <div class="absolute inset-0 bg-or/10 blur-[80px] rounded-full"></div>
-          <img src="./assets/cover.jpg" alt="Le Livre" class="relative z-10 w-full max-w-sm mx-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] border border-or/20" onerror="this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800'; this.classList.add('opacity-50')">
-        </div>
-        
-        <!-- Text -->
-        <div class="space-y-8 gs-reveal">
-          <div>
-            <h2 class="text-xs uppercase tracking-widest text-or font-bold mb-4">Le Pack Complet</h2>
-            <h3 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">Le Guide & <span class="font-serif italic text-or">2 Bonus Offerts</span></h3>
-            <p class="text-ivoire/70 leading-relaxed text-lg">Format digital compatible avec tous vos appareils pour lire à votre rythme.</p>
-          </div>
-
-          <div class="space-y-6">
-            <div class="bg-ombre/80 border border-ivoire/5 p-6 rounded-2xl flex gap-6 hover:border-or/20 transition-colors">
-              <div class="w-12 h-12 bg-or/10 rounded-xl flex items-center justify-center flex-shrink-0 text-or font-serif font-bold text-xl">1</div>
-              <div>
-                <h4 class="font-bold text-lg mb-2">Le Carnet de Transformation (30 Jours)</h4>
-                <p class="text-ivoire/60 text-sm leading-relaxed mb-2">Un cahier pratique d'accompagnement quotidien avec des exercices d'introspection pour ancrer vos nouvelles bases.</p>
-                <span class="text-xs font-bold text-or uppercase tracking-wider">Valeur : 9 999 FCFA</span>
-              </div>
+      <h2 class="text-center text-3xl md:text-5xl font-bold tracking-tight mb-16">Elles ont brisé le cycle. <br><span class="font-serif italic text-or text-4xl md:text-6xl">À ton tour.</span></h2>
+      
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-ombre border border-ivoire/5 rounded-3xl p-8 relative hover:border-or/20 transition-colors gs-reveal-up">
+          <div class="text-or text-4xl font-serif absolute top-6 right-8 opacity-20">"</div>
+          <p class="text-ivoire/90 italic mb-8 leading-relaxed text-lg">
+            "J'ai enfin compris pourquoi j'attirais toujours des hommes distants. Ce n'est pas un recueil de 'techniques pour séduire', c'est un miroir puissant. La checklist m'a empêchée de refaire exactement la même erreur le mois dernier. Je me sens enfin sereine."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-or/20 overflow-hidden">
+               <!-- Placeholder for female avatar, using Unsplash -->
+               <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200&auto=format&fit=crop" loading="lazy" alt="Portrait de Sarah" class="w-full h-full object-cover">
             </div>
-            
-            <div class="bg-ombre/80 border border-ivoire/5 p-6 rounded-2xl flex gap-6 hover:border-or/20 transition-colors">
-              <div class="w-12 h-12 bg-or/10 rounded-xl flex items-center justify-center flex-shrink-0 text-or font-serif font-bold text-xl">2</div>
-              <div>
-                <h4 class="font-bold text-lg mb-2">La Checklist Exclusive</h4>
-                <p class="text-ivoire/60 text-sm leading-relaxed mb-2">Une auto-évaluation complète pour déterminer votre niveau de préparation émotionnelle avant de démarrer une relation.</p>
-                <span class="text-xs font-bold text-or uppercase tracking-wider">Valeur : 4 999 FCFA</span>
-              </div>
+            <div>
+              <p class="font-bold text-lg">Sarah, 31 ans</p>
+              <p class="text-sm text-or">Lectrice vérifiée</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-ombre border border-ivoire/5 rounded-3xl p-8 relative hover:border-or/20 transition-colors gs-reveal-up" style="transition-delay: 100ms;">
+          <div class="text-or text-4xl font-serif absolute top-6 right-8 opacity-20">"</div>
+          <p class="text-ivoire/90 italic mb-8 leading-relaxed text-lg">
+            "Le carnet de 30 jours est une pépite. Il m'a aidée à poser mes limites sans me sentir coupable de 'perdre' l'autre. Ce n'est pas juste de la lecture, c'est une vraie thérapie guidée pour reprendre le contrôle absolu de sa vie affective."
+          </p>
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-full bg-or/20 overflow-hidden">
+               <!-- Placeholder for female avatar, using Unsplash -->
+               <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=200&auto=format&fit=crop" loading="lazy" alt="Portrait de Marie" class="w-full h-full object-cover">
+            </div>
+            <div>
+              <p class="font-bold text-lg">Marie, 35 ans</p>
+              <p class="text-sm text-or">Lectrice vérifiée</p>
             </div>
           </div>
         </div>
@@ -318,226 +311,214 @@
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section id="pricing" class="py-32 px-6 relative z-10 bg-ombre border-t border-ivoire/5">
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] glow-or blur-[150px] opacity-30 pointer-events-none"></div>
-    <div class="max-w-6xl mx-auto text-center relative">
-      <h2 class="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-        Investissez dans votre <span class="font-serif italic text-or">futur amoureux</span>
-      </h2>
-      <p class="text-ivoire/60 text-lg mb-16">Accès immédiat après paiement sécurisé.</p>
+  <!-- 6. L'Offre Irrésistible (Value Stack) & 8. Garantie -->
+  <section id="pricing" class="py-24 md:py-32 px-6 relative z-10 bg-ombre border-t border-ivoire/5">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] glow-or blur-[150px] opacity-20 pointer-events-none"></div>
+    <div class="max-w-4xl mx-auto text-center relative gs-reveal-up">
+      <h2 class="text-sm uppercase tracking-widest text-or font-bold mb-4">Combien vaut ta tranquillité d'esprit ?</h2>
+      <h3 class="text-4xl md:text-5xl font-bold tracking-tight mb-8">
+        Le Pack Digital <span class="font-serif italic text-or">Complet</span>
+      </h3>
+      <p class="text-ivoire/80 text-lg mb-12 max-w-2xl mx-auto">
+        Tu pourrais dépenser des milliers en thérapie ou continuer à perdre ton temps. Aujourd'hui, tu as accès à la méthode complète pour le prix d'un café et d'une pâtisserie.
+      </p>
 
-      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+      <div class="bg-obsidienne border-2 border-or rounded-[2.5rem] p-8 md:p-12 text-left shadow-[0_20px_50px_rgba(212,175,55,0.1)] relative z-20">
         
-        <!-- Plan 1 -->
-        <div class="bg-obsidienne border border-ivoire/10 rounded-[2.5rem] p-10 flex flex-col justify-between gs-reveal-up hover:border-ivoire/20 transition-all duration-300 transform md:mt-4">
-          <div class="text-left space-y-6">
-            <div>
-              <h3 class="text-2xl font-bold text-ivoire">Édition Essentielle</h3>
-              <p class="text-sm text-ivoire/50 mt-1">L'essentiel pour démarrer la lecture.</p>
-            </div>
-            
-            <div class="flex items-end gap-3">
-              <span class="text-4xl font-bold text-ivoire">5 000 FCFA</span>
-              <span class="text-ivoire/40 line-through text-sm mb-1">12 000 FCFA</span>
-            </div>
-            
-            <hr class="border-ivoire/10">
-            
-            <ul class="space-y-4 text-sm text-ivoire/80">
-              <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-or shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                <span>Ebook complet "Attirer l'Amour que Tu Mérites"</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-or shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                <span>Téléchargement immédiat</span>
-              </li>
-            </ul>
-          </div>
-          
-          <a href="https://wbamapto.mychariow.online/prd_vbd5z8c7" class="mt-12 w-full bg-ombre hover:bg-ivoire/5 text-ivoire font-bold py-4 rounded-xl flex items-center justify-center transition-all border border-ivoire/10">
-            Je choisis cette offre
-          </a>
+        <div class="absolute -top-5 left-1/2 -translate-x-1/2 bg-or text-obsidienne text-xs font-black uppercase tracking-widest px-6 py-2.5 rounded-full shadow-lg whitespace-nowrap">
+          Offre Spéciale
         </div>
 
-        <!-- Plan 2 (Premium - Recommended) -->
-        <div class="bg-obsidienne border-2 border-or rounded-[2.5rem] p-10 flex flex-col justify-between gs-reveal-up shadow-[0_20px_50px_rgba(212,175,55,0.1)] hover:shadow-[0_30px_60px_rgba(212,175,55,0.15)] transition-all duration-300 transform md:-translate-y-4 relative z-20">
-          
-          <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-or text-obsidienne text-[10px] font-black uppercase tracking-widest px-6 py-2 rounded-full shadow-lg whitespace-nowrap">
-            Offre Complète Recommandée
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="w-full md:w-1/3 flex justify-center">
+            <img src="./assets/cover.jpg" alt="Le Livre" loading="lazy" class="w-full max-w-[200px] rounded-xl shadow-[0_20px_40px_rgba(0,0,0,0.6)] border border-or/20 transform -rotate-2 hover:rotate-0 transition-transform" onerror="this.src='https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800'; this.classList.add('opacity-50')">
           </div>
-
-          <div class="text-left space-y-6">
-            <div>
-              <h3 class="text-3xl font-serif font-bold text-or">Édition Premium</h3>
-              <p class="text-sm text-ivoire/50 mt-1">L'accompagnement complet avec tous les bonus.</p>
-            </div>
-            
-            <div class="flex items-end gap-3">
-              <span class="text-5xl font-bold text-or">6 999 FCFA</span>
-              <span class="text-ivoire/40 line-through text-sm mb-1">14 999 FCFA</span>
-            </div>
-            
-            <hr class="border-or/20">
-            
-            <ul class="space-y-4 text-sm text-ivoire/90">
-              <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-or shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                <span>Ebook Premium "Attirer l'Amour que Tu Mérites"</span>
+          
+          <div class="w-full md:w-2/3 space-y-6">
+            <ul class="space-y-4 text-base md:text-lg text-ivoire/90 font-medium">
+              <li class="flex items-start gap-4">
+                <svg class="w-6 h-6 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
+                <span><strong>Ebook Premium</strong> "Attirer l'Amour que Tu Mérites"</span>
               </li>
-              <li class="flex items-start gap-3 font-semibold text-or">
-                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
-                <span>Le Carnet de Transformation (30 jours)</span>
+              <li class="flex items-start gap-4 p-3 bg-or/5 rounded-xl border border-or/10">
+                <svg class="w-6 h-6 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+                <div>
+                  <span class="block text-or font-bold">BONUS 1 INCLUS</span>
+                  <span class="block text-sm text-ivoire/80">Le Carnet de Transformation 30 Jours (Valeur: 9 999 FCFA)</span>
+                </div>
               </li>
-              <li class="flex items-start gap-3 font-semibold text-or">
-                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
-                <span>La Checklist Exclusive d'Auto-Évaluation</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <svg class="w-5 h-5 text-or shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>
-                <span>Accès illimité et téléchargement immédiat</span>
+              <li class="flex items-start gap-4 p-3 bg-or/5 rounded-xl border border-or/10">
+                <svg class="w-6 h-6 text-or shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4" /></svg>
+                <div>
+                  <span class="block text-or font-bold">BONUS 2 INCLUS</span>
+                  <span class="block text-sm text-ivoire/80">La Checklist de Compatibilité Émotionnelle (Valeur: 4 999 FCFA)</span>
+                </div>
               </li>
             </ul>
+
+            <div class="pt-6 border-t border-ivoire/10 flex flex-col items-center sm:items-start gap-2">
+              <span class="text-ivoire/40 line-through text-lg">Valeur totale : 14 999 FCFA</span>
+              <span class="text-5xl md:text-6xl font-bold text-or">6 999 FCFA</span>
+            </div>
           </div>
-          
-          <div class="mt-12 space-y-4">
-            <a href="https://wbamapto.mychariow.online/prd_bfz1xz9g" class="w-full bg-or hover:bg-orDoux text-obsidienne font-bold py-4 rounded-xl flex items-center justify-center transition-all shadow-[0_0_20px_rgba(212,175,55,0.2)]">
-              Je prends le pack complet
-            </a>
-            <p class="text-center text-xs text-ivoire/40 flex items-center justify-center gap-1.5">
-              <svg class="w-3.5 h-3.5 text-or" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
-              Paiement 100% sécurisé via Chariow
+        </div>
+
+        <div class="mt-10">
+          <a href="https://wbamapto.mychariow.online/prd_bfz1xz9g" class="w-full bg-or hover:bg-orDoux text-obsidienne font-bold py-5 md:py-6 rounded-2xl flex items-center justify-center transition-all shadow-[0_0_30px_rgba(212,175,55,0.3)] hover:scale-[1.02]">
+            <span class="text-lg md:text-xl uppercase tracking-wider">Je veux attirer l'amour que je mérite</span>
+          </a>
+          <p class="text-center text-xs text-ivoire/50 mt-4 flex items-center justify-center gap-1.5">
+            <svg class="w-4 h-4 text-or" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+            Accès immédiat • Paiement 100% sécurisé via Chariow
+          </p>
+        </div>
+
+        <!-- Garantie -->
+        <div class="mt-10 p-6 bg-obsidienne rounded-2xl border border-ivoire/10 flex flex-col md:flex-row gap-6 items-center text-center md:text-left">
+          <div class="w-16 h-16 bg-or/10 rounded-full flex items-center justify-center shrink-0">
+            <svg class="w-8 h-8 text-or" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-ivoire mb-2">Garantie "Transformation ou Remboursée" à 100%</h4>
+            <p class="text-sm text-ivoire/70 leading-relaxed">
+              Lis le livre. Utilise le carnet. Si dans 30 jours, tu ne ressens pas un changement profond dans ta confiance en toi, envoie-nous un simple email et tu seras remboursée intégralement. Tu ne prends absolument aucun risque.
             </p>
           </div>
         </div>
+
       </div>
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section class="py-24 px-6 relative z-10 max-w-3xl mx-auto">
-    <div class="text-center mb-16">
+  <!-- 9. FAQ -->
+  <section class="py-24 md:py-32 px-6 relative z-10 max-w-3xl mx-auto">
+    <div class="text-center mb-16 gs-reveal-up">
       <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Questions Fréquentes</h2>
     </div>
     
     <div class="space-y-4">
-      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up">
+      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up" aria-expanded="false">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-lg hover:text-or transition-colors">
-          <span>Comment vais-je recevoir le guide ?</span>
+          <span>Est-ce adapté si je suis célibataire depuis longtemps ?</span>
           <span class="transition group-open:rotate-180">
             <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </span>
         </summary>
-        <div class="text-ivoire/70 px-6 pb-6 leading-relaxed">
-          Immédiatement après votre paiement sécurisé via Chariow, vous recevrez un email contenant vos liens d'accès direct pour télécharger l'ebook et les bonus.
+        <div class="text-ivoire/80 px-6 pb-6 leading-relaxed text-lg">
+          C'est le moment idéal. Ce guide va "nettoyer" ton terrain émotionnel pour que ta prochaine relation parte sur des bases saines et solides, au lieu de répéter les erreurs du passé.
         </div>
       </details>
 
-      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up">
+      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up" aria-expanded="false">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-lg hover:text-or transition-colors">
-          <span>Sur quels appareils puis-je lire ?</span>
+          <span>Et si je suis déjà en couple, mais que c'est compliqué ?</span>
           <span class="transition group-open:rotate-180">
             <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </span>
         </summary>
-        <div class="text-ivoire/70 px-6 pb-6 leading-relaxed">
-          Les fichiers sont au format PDF standardisé. Ils sont parfaitement lisibles sur votre smartphone (iPhone/Android), votre tablette, votre ordinateur portable ou votre liseuse électronique.
+        <div class="text-ivoire/80 px-6 pb-6 leading-relaxed text-lg">
+          Ce livre t'aidera à comprendre si la relation peut être sauvée en réajustant ton propre positionnement (et en fixant tes limites), ou s'il est temps de te protéger. La guérison commence toujours par soi.
         </div>
       </details>
 
-      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up">
+      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up" aria-expanded="false">
         <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-lg hover:text-or transition-colors">
-          <span>Ce livre convient-il si je suis déjà en couple ?</span>
+          <span>Pourquoi un ebook et pas un livre physique ?</span>
           <span class="transition group-open:rotate-180">
             <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
           </span>
         </summary>
-        <div class="text-ivoire/70 px-6 pb-6 leading-relaxed">
-          Oui, tout à fait. Les mécanismes de guérison des blessures affectives et d'estime de soi s'appliquent autant pour attirer une nouvelle personne saine que pour rééquilibrer et assainir une relation existante.
+        <div class="text-ivoire/80 px-6 pb-6 leading-relaxed text-lg">
+          Pour que tu puisses commencer ta guérison <strong>maintenant</strong>, lire discrètement depuis ton téléphone n'importe où, et ne pas avoir à attendre (ou payer) une livraison. L'accès est immédiat après le paiement.
+        </div>
+      </details>
+
+      <details class="bg-ombre border border-ivoire/5 rounded-2xl group gs-reveal-up" aria-expanded="false">
+        <summary class="flex justify-between items-center font-bold cursor-pointer list-none p-6 text-lg hover:text-or transition-colors">
+          <span>Est-ce que cela fonctionne vraiment ?</span>
+          <span class="transition group-open:rotate-180">
+            <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </span>
+        </summary>
+        <div class="text-ivoire/80 px-6 pb-6 leading-relaxed text-lg">
+          La psychologie de l'attachement est scientifiquement prouvée. En appliquant les exercices du carnet de 30 jours (inclus dans le pack), tu vas physiquement recâbler tes réactions face à l'amour.
         </div>
       </details>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="bg-ombre py-12 px-6 border-t border-ivoire/5 relative z-10">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+  <footer class="bg-ombre py-16 px-6 border-t border-ivoire/5 relative z-10 pb-32 md:pb-16">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
       <div class="flex items-center gap-2">
         <span class="font-serif italic font-bold tracking-widest text-or text-xl">Rêvothèque</span>
       </div>
       <p class="text-sm text-ivoire/40">© 2026 Rêvothèque. Tous droits réservés.</p>
       <div class="flex gap-6 text-sm text-ivoire/60">
         <a href="#" class="hover:text-or transition-colors">Mentions légales</a>
-        <a href="#" class="hover:text-or transition-colors">CGV</a>
+        <a href="#" class="hover:text-or transition-colors">Politique de confidentialité</a>
+        <a href="#" class="hover:text-or transition-colors">Contact</a>
       </div>
     </div>
   </footer>
 
-  <!-- GSAP & Animations Logic -->
+  <!-- Scripts -->
   <script>
     // 1. Sticky Navbar Effect
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 50) {
-        navbar.classList.add('bg-obsidienne/90', 'backdrop-blur-md', 'shadow-lg', 'border-ivoire/10');
-        navbar.classList.remove('border-transparent');
+        navbar.classList.add('bg-obsidienne/95', 'backdrop-blur-md', 'shadow-lg', 'border-ivoire/10');
+        navbar.classList.remove('border-transparent', 'top-4', 'md:top-6');
+        navbar.classList.add('top-2');
       } else {
-        navbar.classList.remove('bg-obsidienne/90', 'backdrop-blur-md', 'shadow-lg', 'border-ivoire/10');
-        navbar.classList.add('border-transparent');
+        navbar.classList.remove('bg-obsidienne/95', 'backdrop-blur-md', 'shadow-lg', 'border-ivoire/10', 'top-2');
+        navbar.classList.add('border-transparent', 'top-4', 'md:top-6');
       }
     });
 
-    // 2. GSAP Animations
-    document.addEventListener("DOMContentLoaded", (event) => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      // Kintsugi SVG Path Drawing
-      gsap.to(".kintsugi-line", {
-        strokeDashoffset: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: "body",
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 1
-        }
+    // 2. FAQ Accessibility Toggle
+    document.querySelectorAll('details').forEach((el) => {
+      el.addEventListener('toggle', (e) => {
+        el.setAttribute('aria-expanded', el.open);
       });
+    });
 
-      // Standard Reveal Animations
-      const revealElements = gsap.utils.toArray('.gs-reveal');
-      revealElements.forEach((elem) => {
-        gsap.fromTo(elem, 
-          { autoAlpha: 0, x: -30 }, 
-          {
-            autoAlpha: 1, 
-            x: 0, 
-            duration: 1, 
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: elem,
-              start: "top 85%",
-            }
+    // 3. GSAP Animations (Wait for load to prevent blocking)
+    window.addEventListener("load", (event) => {
+      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Kintsugi SVG Path Drawing
+        gsap.to(".kintsugi-line", {
+          strokeDashoffset: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: "body",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 1
           }
-        );
-      });
+        });
 
-      const revealUpElements = gsap.utils.toArray('.gs-reveal-up');
-      revealUpElements.forEach((elem) => {
-        gsap.fromTo(elem, 
-          { autoAlpha: 0, y: 30 }, 
-          {
-            autoAlpha: 1, 
-            y: 0, 
-            duration: 0.8, 
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: elem,
-              start: "top 90%",
+        // Reveal Up Animations for content below fold
+        const revealUpElements = gsap.utils.toArray('.gs-reveal-up');
+        revealUpElements.forEach((elem) => {
+          gsap.fromTo(elem, 
+            { autoAlpha: 0, y: 40 }, 
+            {
+              autoAlpha: 1, 
+              y: 0, 
+              duration: 0.8, 
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: elem,
+                start: "top 90%",
+              }
             }
-          }
-        );
-      });
+          );
+        });
+      }
     });
   </script>
 </body>
